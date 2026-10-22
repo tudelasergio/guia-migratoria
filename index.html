@@ -173,7 +173,7 @@ alt=""
     <nav aria-label="Navegación principal">
       <a href="#inicio">Inicio</a><a href="#guia">La guía</a><a href="#beneficios">Beneficios</a><a href="#herramientas">Herramientas</a><a href="#preguntas">Preguntas frecuentes</a>
     </nav>
-    <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva">Comprar ahora <span aria-hidden="true">→</span></a>
+    <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva" data-meta-checkout="encabezado">Comprar ahora <span aria-hidden="true">→</span></a>
   </div>
 </header>
 
@@ -184,7 +184,7 @@ alt=""
       <p class="eyebrow">Ebook PDF · Orientación migratoria</p>
       <h1>Tu camino en Chile empieza con la <span>información correcta.</span></h1>
       <p class="lead">Conoce las opciones de residencia en Chile, identifica qué organismo consultar y organiza tus documentos y próximos pasos con orientación práctica y fuentes oficiales.</p>
-      <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva">Obtener mi ebook ahora <span aria-hidden="true">→</span></a>
+      <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva" data-meta-checkout="portada">Obtener mi ebook ahora <span aria-hidden="true">→</span></a>
       <div class="delivery-inline" role="note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         <span><strong>Ebook descargable.</strong> Tras confirmar el pago, recibirás automáticamente en tu correo el acceso para descargarlo.</span>
@@ -281,7 +281,7 @@ alt=""
     <div class="cta-action">
       <p class="cta-price"><span class="price-label">Precio para Chile</span><strong>$9.990 <small>CLP</small></strong></p>
       <!-- Checkout oficial de Hotmart en una pestaña nueva. -->
-      <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva">Comprar el ebook <span aria-hidden="true">→</span></a>
+      <a class="btn" href="https://pay.hotmart.com/M108120918U" target="_blank" rel="noopener noreferrer" aria-label="Abrir pago seguro de Hotmart en una pestaña nueva" data-meta-checkout="seccion_final">Comprar el ebook <span aria-hidden="true">→</span></a>
       <p class="price-fineprint">Precio final y moneda confirmados en Hotmart.</p>
     </div>
   </div>
@@ -299,5 +299,29 @@ alt=""
   </div>
 </footer>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<!-- Meta Pixel: registrar el clic real hacia el checkout de Hotmart. -->
+<script>
+(function () {
+  function prepararSeguimientoCheckout() {
+    document.querySelectorAll('a[data-meta-checkout]').forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        if (typeof window.fbq !== 'function') return;
+        window.fbq('track', 'InitiateCheckout', {
+          content_name: 'Tu Guía en Chile - Ebook',
+          content_ids: ['M108120918U'],
+          content_type: 'product',
+          button_location: boton.getAttribute('data-meta-checkout')
+        });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', prepararSeguimientoCheckout);
+  } else {
+    prepararSeguimientoCheckout();
+  }
+})();
+</script>
+<!-- Fin seguimiento de clic al checkout. -->
 </body>
 </html>
